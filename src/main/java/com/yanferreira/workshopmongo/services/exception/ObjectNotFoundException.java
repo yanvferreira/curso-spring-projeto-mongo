@@ -1,4 +1,4 @@
-package com.yanferreira.workshopmongo.services.service.exception;
+package com.yanferreira.workshopmongo.services.exception;
 
 public class ObjectNotFoundException extends RuntimeException {
     private static final Long serialVersionUID = 1L;
