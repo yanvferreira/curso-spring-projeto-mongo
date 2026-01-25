@@ -1,5 +1,6 @@
 package com.yanferreira.workshopmongo.repositories;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -16,4 +17,8 @@ public interface PostRepository extends MongoRepository<Post, String> {
 
     @Query("{ 'title': { $regex: ?0, $options: 'i' } }")
     List<Post> searchTitle(String text);
+
+    // Buscar posts contendo um dado string em qualquer lugar (no título, corpo ou comentários) e em um dado intervalo de data
+    @Query("{ $and: [ { date: { $gte: ?1 } }, { date: { $lte: ?2 } }, { $or: [ { 'title': { $regex: ?0, $options: 'i' } }, { 'body': { $regex: ?0, $options: 'i' } }, { 'comments.text': { $regex: ?0, $options: 'i' } } ] } ] }")
+    List<Post> fullSearch(String text, LocalDate minDate, LocalDate maxDate);
 }
